@@ -17,7 +17,6 @@
             --text-secondary: #546E7A;
             
             --border-radius: 8px;
-            --shadow: 0 4px 12px rgba(26, 95, 158, 0.1);
         }
         
         * {
@@ -44,7 +43,6 @@
             }
             
             .content {
-                box-shadow: none;
                 border: none;
             }
         }
@@ -98,7 +96,7 @@
             border-top: none;
             border-radius: 0 0 var(--border-radius) var(--border-radius);
             padding: 2rem;
-            box-shadow: var(--shadow);
+            /* УБРАЛ ТЕНЬ */
         }
         
         /* === НАЗНАЧЕНИЕ ПАМЯТКИ (без заголовка) === */
@@ -142,11 +140,12 @@
             background: #F8FBFF;
             border-radius: var(--border-radius);
             border: 2px dashed var(--secondary-blue);
+            /* УБРАЛ ТЕНЬ */
         }
         
         .qr-title {
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 400;
             color: var(--primary-blue);
             margin-bottom: 1.5rem;
         }
@@ -158,36 +157,15 @@
             border-radius: 12px;
             margin-bottom: 1rem;
             border: 1px solid var(--gray-light);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            position: relative;
+            /* УБРАЛ ТЕНЬ */
         }
         
-        .qr-code-placeholder {
+        .qr-code-image {
             width: 250px;
             height: 250px;
-            background: #f0f0f0;
-            border: 2px solid #ddd;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            position: relative;
-        }
-        
-        /* НАДПИСЬ ВНУТРИ РАМКИ QR-КОДА */
-        .qr-code-text {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--primary-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 2px solid #ddd;
+            display: block;
         }
         
         /* === КОНТАКТЫ === */
@@ -195,6 +173,7 @@
             background: var(--gray-light);
             padding: 1.5rem;
             border-radius: var(--border-radius);
+            /* УБРАЛ ТЕНЬ */
         }
         
         .contacts-title {
@@ -237,7 +216,7 @@
                 padding: 1.5rem;
             }
             
-            .qr-code-placeholder {
+            .qr-code-image {
                 width: 200px;
                 height: 200px;
             }
@@ -275,24 +254,21 @@
             <ul class="info-list">
                 <li>Немедленное уведомление фтизиатрической службы</li>
                 <li>Забор материала для микробиологической верификации</li>
+                <li>Помощь фтизиатра в определении ВИЧ-статуса умершего</li>
+                <li>Обязательное посмертное определение ВИЧ-статуса при отсутствии прижизненных данных</li>
                 <li>Совместная оценка причины смерти с фтизиатром</li>
                 <li>Корректное оформление медицинской документации</li>
             </ul>
         </section>
 
-        <!-- Блок с QR-кодом -->
+        <!-- Блок с QR-кодом - ТОЛЬКО ОДНА НАДПИСЬ СВЕРХУ -->
         <section class="qr-section">
             <h3 class="qr-title">Актуальная версия памятки доступна по QR-коду</h3>
             
             <div class="qr-code-container">
-                <!-- Здесь нужно вставить реальный QR-код -->
-                <div class="qr-code-placeholder">
-                    <div style="margin-bottom: 20px;">
-                        <i class="fas fa-qrcode" style="font-size: 60px; color: #ccc;"></i>
-                    </div>
-                    <!-- НАДПИСЬ ВНУТРИ РАМКИ QR-КОДА -->
-                    <div class="qr-code-text">АКТУАЛЬНЫЙ QR-КОД</div>
-                </div>
+                <!-- ЗАГРУЗИТЕ ФАЙЛ qr_pamyatka.png В РЕПОЗИТОРИЙ -->
+                <img src="qr_pamyatka.png" alt="QR-код памятки" class="qr-code-image">
+                <!-- ВТОРОЙ НАДПИСИ ПОД КОДОМ НЕТ -->
             </div>
         </section>
 
@@ -333,14 +309,5 @@
             </div>
         </section>
     </main>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            // Для вставки реального QR-кода:
-            // 1. Удалите весь блок .qr-code-placeholder
-            // 2. Вставьте: <img src="qr-sudmed.png" alt="QR-код" style="width:250px;height:250px;">
-            // 3. Добавьте после img: <div class="qr-code-text">АКТУАЛЬНЫЙ QR-КОД</div>
-        });
-    </script>
 </body>
 </html>
