@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-код: Взаимодействие с патологоанатомами</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1A5F9E;
+            --secondary-blue: #2C8BD4;
+            --accent-red: #D32F2F;
+            --white: #FFFFFF;
+            --gray-light: #F5F7FA;
+            --text-primary: #263238;
+            --text-secondary: #546E7A;
+            
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(26, 95, 158, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .content {
+                box-shadow: none;
+                border: none;
+            }
+        }
+        
+        /* === ШАПКА ОБЪЯВЛЕНИЯ === */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-red);
+        }
+        
+        .logo h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        /* === ОСНОВНОЙ КОНТЕНТ === */
+        .content {
+            border: 1px solid var(--gray-light);
+            border-top: none;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        /* === НАЗНАЧЕНИЕ ПАМЯТКИ (без заголовка) === */
+        .purpose-section {
+            margin-bottom: 2rem;
+        }
+        
+        .info-text {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .info-list {
+            list-style: none;
+            margin-left: 1.5rem;
+        }
+        
+        .info-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: var(--text-primary);
+        }
+        
+        .info-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--secondary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* === БЛОК С QR-КОДОМ === */
+        .qr-section {
+            text-align: center;
+            padding: 2rem;
+            margin: 1rem 0 2rem;
+            background: #F8FBFF;
+            border-radius: var(--border-radius);
+            border: 2px dashed var(--secondary-blue);
+        }
+        
+        .qr-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .qr-code-container {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--gray-light);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .qr-code-placeholder {
+            width: 250px;
+            height: 250px;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        
+        /* НАДПИСЬ ВНУТРИ РАМКИ QR-КОДА */
+        .qr-code-text {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* === КОНТАКТЫ === */
+        .contacts {
+            background: var(--gray-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+        }
+        
+        .contacts-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .contact-item i {
+            color: var(--secondary-blue);
+            margin-top: 3px;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 120px;
+        }
+        
+        .contact-value {
+            color: var(--text-secondary);
+        }
+        
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .qr-code-placeholder {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .contact-label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка объявления -->
+    <header class="header">
+        <div class="logo">
+            <h1>ГБУЗ МО "МОКПТД"</h1>
+            <p>Филиал "Клинский"</p>
+        </div>
+        
+        <h2 class="title">Взаимодействие при подозрении на туберкулез</h2>
+        <p class="subtitle">Алгоритм для патологоанатомов и судмедэкспертов</p>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="content">
+        <!-- Назначение памятки (без заголовка) -->
+        <section class="purpose-section">
+            <p class="info-text">
+                Данная памятка содержит алгоритм действий для врачей-патологоанатомов и врачей-судебно-медицинских экспертов при обнаружении признаков туберкулеза на вскрытии.
+            </p>
+            <ul class="info-list">
+                <li>Немедленное уведомление фтизиатрической службы</li>
+                <li>Забор материала для микробиологической верификации</li>
+                <li>Совместная оценка причины смерти с фтизиатром</li>
+                <li>Корректное оформление медицинской документации</li>
+            </ul>
+        </section>
+
+        <!-- Блок с QR-кодом -->
+        <section class="qr-section">
+            <h3 class="qr-title">Актуальная версия памятки доступна по QR-коду</h3>
+            
+            <div class="qr-code-container">
+                <!-- Здесь нужно вставить реальный QR-код -->
+                <div class="qr-code-placeholder">
+                    <div style="margin-bottom: 20px;">
+                        <i class="fas fa-qrcode" style="font-size: 60px; color: #ccc;"></i>
+                    </div>
+                    <!-- НАДПИСЬ ВНУТРИ РАМКИ QR-КОДА -->
+                    <div class="qr-code-text">АКТУАЛЬНЫЙ QR-КОД</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты для связи -->
+        <section class="contacts">
+            <h3 class="contacts-title">Контакты для оперативной связи</h3>
+            
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                    <span class="contact-label">Телефон МОКПТД:</span>
+                    <span class="contact-value">+7 (499) 978-02-43</span>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <span class="contact-label">E-mail:</span>
+                    <span class="contact-value">mz_mokptd@mosreg.ru</span>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <i class="fas fa-user-md"></i>
+                <div>
+                    <span class="contact-label">Клинский филиал:</span>
+                    <span class="contact-value">Лукаш Игорь Александрович, 8-915-386-15-85</span>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <span class="contact-label">Территории:</span>
+                    <span class="contact-value">г.о. Клин, Солнечногорск, Химки, Долгопрудный, Лобня</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Для вставки реального QR-кода:
+            // 1. Удалите весь блок .qr-code-placeholder
+            // 2. Вставьте: <img src="qr-sudmed.png" alt="QR-код" style="width:250px;height:250px;">
+            // 3. Добавьте после img: <div class="qr-code-text">АКТУАЛЬНЫЙ QR-КОД</div>
+        });
+    </script>
+</body>
+</html>
